@@ -8,5 +8,7 @@ public class Test {
 		graph.loadService();
 //		graph.test();
 		//graph.test2();
+		RailSystem rail = new RailSystem();
+		rail.recover_route("Rome");
 	}
 }

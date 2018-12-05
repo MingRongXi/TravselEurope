@@ -40,7 +40,7 @@ public class EuropeGraph {
 			double fee = Double.parseDouble(information[2]);
 			double distance = Double.parseDouble(information[3]);
 			
-			City city = new City(city_name, null, 10000);
+			City city = new City(city_name, null, 10000, false);
 			cityList.add(city);
 			
 			Node node = new Node();
@@ -64,11 +64,11 @@ public class EuropeGraph {
 		//	String stored_city = lastNode.city_Name;
 			String stored_city = lastNode.getCity_Name();
 			if(city_name.equals(stored_city)){
-				Service service = new Service(to_city, distance, 10000);
+				Service service = new Service(to_city, distance, fee);
 				lastNode.getEdge().add(service);
 			}
 			else{
-				City city = new City(city_name, null, 0);
+				City city = new City(city_name, null, 10000, false);
 				cityList.add(city);
 				
 				Node node = new Node();
