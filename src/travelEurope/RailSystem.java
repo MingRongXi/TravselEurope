@@ -6,12 +6,15 @@ import java.util.LinkedList;
 
 public class RailSystem {
 	private EuropeGraph europeGraph = new EuropeGraph();
-
+	private ArrayList<Double> minFee = new ArrayList<>();
+	
+	public double claculateFee(){
+		return 0;
+	}
 	
 	public RailSystem() throws FileNotFoundException {
 		europeGraph.loadService();
 	}
-	
 	
 	public City find_city(String from_cityName){
 		for(City find_city : europeGraph.getCityList()){
@@ -34,8 +37,10 @@ public class RailSystem {
 	}
 	
 	public void recover_route(String from_cityName){
+		double totalPrice = 0;
 		Node beginNode = find_node(from_cityName);
 		find_city(beginNode.getCity_Name()).setVisit(true);
+	//	ArrayList<City> cityList = new ArrayList<>();
 		//对该起始定点的每一个连接进行初始化
 		for(Service service : beginNode.getEdge()){
 			double fee = service.getFee();
@@ -43,13 +48,26 @@ public class RailSystem {
 			City city = find_city(edgeName);
 			city.setTotal_price(fee);
 			city.setForm_city(from_cityName);
+			//cityList.add(city);
 		}
 		
-//		City minPriceCity = findMinPriceCity();
+		//在该节点的可到达城市中选出距离最短的城市
+		City minPriceCity = new City(10000);
+		double minPrice = minPriceCity.getTotal_price();
+		//totalPrice += minPrice;
+		//minPriceCity.setVisit(true);
+		for(int i = 0; i < europeGraph.getCityList().size(); i++) {
+			if(europeGraph.getCityList().get(i).getTotal_price() < minPrice && europeGraph.getCityList().get(i).isVisit() == false) {
+				minPriceCity = europeGraph.getCityList().get(i);
+				minPrice = minPriceCity.getTotal_price();
+
+			}
+		}
+		minPriceCity.setVisit(true);
 		
 		int times = 0;
 		while(times < europeGraph.getCityList().size() - 1) {
-			City minPriceCity = findMinPriceCity();
+	//		boolean status = true;	//判断CityList是否被修改过
 			beginNode = find_node(minPriceCity.getCity_name());
 			from_cityName = minPriceCity.getCity_name();
 
@@ -64,23 +82,25 @@ public class RailSystem {
 				}
 			}
 			
-			//minPriceCity = findMinPriceCity();
+			minPriceCity = new City(10000);
+			minPrice = minPriceCity.getTotal_price();
+			//totalPrice += minPrice;
+			//minPriceCity.setVisit(true);
+			for(int i = 0; i < europeGraph.getCityList().size(); i++) {
+				if(europeGraph.getCityList().get(i).getTotal_price() < minPrice && europeGraph.getCityList().get(i).isVisit() == false) {
+					minPriceCity = europeGraph.getCityList().get(i);
+					minPrice = minPriceCity.getTotal_price();
+
+				}
+			}
+			minPriceCity.setVisit(true);
+
+			
+			//status = true;
 			times++;
 		}
+		//System.out.println(totalPrice);
 	}
 	
-	public City findMinPriceCity(){
-		//找到与起点最便宜的顶点
-		City minPriceCity = new City(10000);
-		double minPrice = minPriceCity.getTotal_price();
-		for(int i = 0; i < europeGraph.getCityList().size(); i++) {
-			City currentCity = europeGraph.getCityList().get(i);
-			if(currentCity.getTotal_price() < minPrice && currentCity.isVisit() == false) {
-				minPriceCity = europeGraph.getCityList().get(i);
-				minPrice = minPriceCity.getTotal_price();
-			}
-		}
-		minPriceCity.setVisit(true);
-		return minPriceCity;
-	}
+	
 }
