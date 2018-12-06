@@ -35,7 +35,4 @@ public class Service {
 	public void setFee(double fee) {
 		this.fee = fee;
 	}
-	
-	
-	
 }

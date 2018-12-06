@@ -4,6 +4,7 @@ public class City {
 	private String city_name;
 	private String form_city;
 	private double total_price;
+	private double total_distance;
 	private boolean visit;
 	
 	public City(double total_price) {
@@ -50,5 +51,11 @@ public class City {
 	public void setVisit(boolean visit) {
 		this.visit = visit;
 	}
-	
+	public double getTotal_distance() {
+		return total_distance;
+	}
+
+	public void setTotal_distance(double total_distance) {
+		this.total_distance = total_distance;
+	}
 }
