@@ -6,6 +6,9 @@ public class City {
 	private double total_price;
 	private boolean visit;
 	
+	public City(double total_price) {
+		this.total_price = total_price;
+	}
 
 
 	public City(String city_name, String form_city, double total_price, boolean visit) {
